@@ -14,6 +14,7 @@ import Image12 from "./assets/Frankenstein.webp";
 import Image13 from "./assets/Alchemist.jpeg";
 import Image14 from "./assets/Dracula.webp";
 import Image15 from "./assets/Little-Women.jpeg";
+import Image16 from "./assets/BingWallpaper.jpg";
 import { Header } from "./Header";
 import { Footer } from "./Footer";
 import { Modal } from "./Modal";
@@ -189,7 +190,7 @@ export const App = () => {
     <>
       <Header />
       <main className="main bg-[#c4c4c4] p-6 md:p-9">
-        <img className="rounded-2xl  w-[1130px] ml-auto mr-auto h-[300px] object-cover mb-7 " src="src/assets/BingWallpaper.jpg" alt="" />
+        <img className="rounded-2xl  w-[1130px] ml-auto mr-auto h-[300px] object-cover mb-7 " src={Image16} alt="" />
         <h2 className="align-elements text-black text-2xl font-bold mb-2.5">Top 15 books:</h2>
         <ul className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 justify-center align-elements">
           {books.map((book) => (
