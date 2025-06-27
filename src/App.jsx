@@ -186,12 +186,29 @@ export const App = () => {
     },
   ]);
   const [selectedBook, setSelectedBook] = useState(null);
+  const [imageLoaded, setImageLoaded] = useState(false);
   return (
     <>
       <Header />
       <main className="main bg-[#c4c4c4] p-6 md:p-9">
-        <img className="rounded-2xl  w-[1130px] ml-auto mr-auto h-[300px] object-cover mb-7 " src={Image16} alt="" />
-        <h2 className="align-elements text-black text-2xl font-bold mb-2.5">Top 15 books:</h2>
+        <div className="relative w-[1130px] h-[300px] mx-auto mb-7 rounded-2xl overflow-hidden">
+          {!imageLoaded && (
+            <div className="absolute inset-0 flex items-center justify-center bg-gray-300 animate-pulse z-10">
+              <span className="loading loading-bars loading-md"></span>
+            </div>
+          )}
+          <img
+            className="rounded-2xl w-full h-full object-cover transition-opacity duration-500"
+            src={Image16}
+            alt=""
+            style={{ opacity: imageLoaded ? 1 : 0 }}
+            onLoad={() => setImageLoaded(true)}
+          />
+        </div>
+
+        <h2 className="align-elements text-black text-2xl font-bold mb-2.5">
+          Top 15 books:
+        </h2>
         <ul className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 justify-center align-elements">
           {books.map((book) => (
             <li
@@ -235,17 +252,16 @@ export const App = () => {
                   >
                     more
                   </button>
-                 
                 </div>
               </div>
             </li>
           ))}
         </ul>
         <Modal
-        book={selectedBook}
-        isOpen={selectedBook !== null}
-        onClose={() => setSelectedBook(null)}
-      />
+          book={selectedBook}
+          isOpen={selectedBook !== null}
+          onClose={() => setSelectedBook(null)}
+        />
       </main>
       <Footer />
     </>
