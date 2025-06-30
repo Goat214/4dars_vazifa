@@ -18,8 +18,15 @@ import Image16 from "./assets/BingWallpaper.jpg";
 import { Header } from "./Header";
 import { Footer } from "./Footer";
 import { Modal } from "./Modal";
-
+import Book from "./book";
 export const App = () => {
+  const addDummyBook = () => {
+    const newBook = {
+      id: Date.now(),
+    };
+    setBooks([...books, newBook]);
+  };
+
   const [books, setBooks] = useState([
     {
       id: 1,
@@ -187,6 +194,51 @@ export const App = () => {
   ]);
   const [selectedBook, setSelectedBook] = useState(null);
   const [imageLoaded, setImageLoaded] = useState(false);
+
+  const deletedBooks = (id) => {
+    const updatedBooks = books.filter((book) => book.id !== id);
+    setBooks(updatedBooks);
+  };
+  const hisob = 0;
+
+  if (books.length === 0) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-gradient-to-tr from-[#0f2027] via-[#203a43] to-[#2c5364] px-6">
+        <div className="text-center bg-white/5 backdrop-blur-2xl p-10 rounded-3xl shadow-[0_8px_32px_rgba(0,0,0,0.5)] border border-white/20 max-w-xl w-full">
+          <div className="mb-6">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              className="w-20 h-20 mx-auto text-white drop-shadow-xl animate-pulse"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              strokeWidth={1.5}
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d="M12 4v16m8-8H4"
+              />
+            </svg>
+          </div>
+          <h1 className="text-4xl font-bold text-white mb-3 drop-shadow">
+            Hozircha kitob yo‘q
+          </h1>
+          <p className="text-gray-300 text-lg mb-6">
+            Siz hali hech qanday kitob qo‘shmagansiz. Yoki ularni o‘chirib
+            yuborgandirsiz :)
+          </p>
+          <button
+            className="btn btn-accent btn-wide shadow-md"
+            onClick={addDummyBook}
+          >
+            Kitob qo‘shish
+          </button>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <>
       <Header />
@@ -210,52 +262,16 @@ export const App = () => {
           Top 15 books:
         </h2>
         <ul className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 justify-center align-elements">
-          {books.map((book) => (
-            <li
-              key={book.id}
-              className="group rounded-2xl overflow-hidden max-w-full w-full sm:w-[320px] md:w-[360px] mx-auto bg-[#444444] flex flex-col shadow-lg hover:shadow-[0_8px_30px_rgba(0,0,0,0.6)] hover:scale-[1.02] transition-all duration-300"
-            >
-              <div
-                className="relative h-[300px] overflow-hidden bg-cover bg-center flex items-center justify-center"
-                style={{ backgroundImage: `url(${book.image})` }}
-              >
-                <div className="absolute inset-0 backdrop-blur-md bg-black/30"></div>
-                <img
-                  src={book.image}
-                  alt="book"
-                  className="relative z-10 w-[150px] h-[230px] object-cover transition-transform duration-300 ease-in-out group-hover:scale-110"
-                />
-              </div>
-
-              <div className="p-5 flex flex-col flex-grow">
-                <h3 className="text-2xl text-white mb-1">{book.title}</h3>
-                <h4 className="text-gray-300 mb-3">
-                  by <span className="italic"> {book.author} </span> (Author)
-                </h4>
-
-                <div className="flex text-gray-400 mb-3">
-                  <p className="border border-gray-500 text-white px-3 py-1 rounded">
-                    {book.genre}
-                  </p>
-                  <p className="ml-auto">{book.rating} ⭐</p>
-                </div>
-
-                <p className="text-gray-200 mb-5 flex-grow">
-                  {book.description}
-                </p>
-
-                <div className="flex items-center">
-                  <p className="text-gray-300">Written in {book.year}</p>
-                  <button
-                    onClick={() => setSelectedBook(book)}
-                    className="btn ml-auto"
-                  >
-                    more
-                  </button>
-                </div>
-              </div>
-            </li>
-          ))}
+          {books.map((book) => {
+            return (
+              <Book
+                key={book.id}
+                book={book}
+                deletedBooks={deletedBooks}
+                setSelectedBook={setSelectedBook}
+              />
+            );
+          })}
         </ul>
         <Modal
           book={selectedBook}
