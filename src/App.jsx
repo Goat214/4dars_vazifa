@@ -18,7 +18,7 @@ import Image16 from "./assets/BingWallpaper.jpg";
 import { Header } from "./Header";
 import { Footer } from "./Footer";
 import { Modal } from "./Modal";
-import Book from "./book";
+import Book from "./Book";
 export const App = () => {
   const addDummyBook = () => {
     const newBook = {
